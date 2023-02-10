@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/cars/search}">
+    <label for="query">Enter car: </label>
+    <input type="text" id="query" name="query"/>
+    <br/>
+    <input type="submit" value="Search!"/>
+</form>
+
+<div th:if="${cars}">
+    <div th:if="${cars.isEmpty()}">
+        <span>We don't have this car</span>
+    </div>
+
+    <div th:each="car : ${cars}">
+        <p th:text="${car.getModel() + ', ' + car.getManufacturer() + ', ' + car.getYear()}">car</p>
+
+        <div th:if="${car.getPerson() != null}">
+            <span>Car is rented by: </span> <span th:text="${car.getPerson().getFullName()}">Person Name</span>
+        </div>
+
+        <div th:if="${car.getPerson() == null}">
+            <span>Car is free</span>
+        </div>
+
+        <hr/>
+    </div>
+</div>
+
+</body>
+</html>

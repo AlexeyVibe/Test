@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Car card</title>
+</head>
+<body>
+<p th:text="${car.getModel() + ', ' + car.getManufacturer() + ', ' + car.getYear()}">VALUE</p>
+
+<div th:if="${owner}">
+    <span>The car is rented by: </span> <span th:text="${owner.getFullName()}">Person Name</span>
+
+    <form th:method="PATCH" th:action="@{/cars/{id}/release(id=${car.getId()})}">
+        <input type="submit" value="Release car"/>
+    </form>
+</div>
+
+<div th:if="${people}">
+    <span>The car is free. Who does want rent it?</span>
+    <form th:method="PATCH" th:action="@{/cars/{id}/assign(id=${car.getId()})}">
+        <label for="person">Choose the person</label>
+        <select th:object="${person}" th:field="*{id}" id="person">
+            <option th:each="person : ${people}" th:value="${person.getId()}" th:text="${person.getFullName()}">
+            </option>
+        </select>
+        <input type="submit" value="Rent car"/>
+    </form>
+</div>
+
+<hr/>
+
+<form th:method="GET" th:action="@{/cars/{id}/edit(id=${car.getId()})}">
+    <input type="submit" value="Edit"/>
+</form>
+
+<form th:method="DELETE" th:action="@{/cars/{id}(id=${car.getId()})}">
+    <input type="submit" value="Delete"/>
+</form>
+
+</body>
+</html>

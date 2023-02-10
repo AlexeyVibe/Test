@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+</head>
+<body>
+
+<div th:each="user : ${users}">
+    <a th:text="${user.getLogin() + ', ' + user.getRole()}">user</a>
+    <form th:method="PATCH" th:action="@{/auth/{id}/assignAdmin(id=${user.getId()})}">
+        <input type="submit" value="Admin"/>
+    </form>
+    <form th:method="PATCH" th:action="@{/auth/{id}/assignUser(id=${user.getId()})}">
+        <input type="submit" value="User"/>
+    </form>
+</div>
+
+
+
+</body>
+</html>
